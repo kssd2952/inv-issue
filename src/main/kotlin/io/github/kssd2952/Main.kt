@@ -15,6 +15,7 @@ import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.entity.EntityDropItemEvent
 import org.bukkit.event.entity.EntitySpawnEvent
 import org.bukkit.event.entity.ItemSpawnEvent
+import org.bukkit.event.player.PlayerRespawnEvent
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
@@ -89,6 +90,17 @@ class Main : JavaPlugin(), Listener {
 
         for (player in Bukkit.getOnlinePlayers()) {
             player.addPotionEffect(
+                PotionEffect(
+                    PotionEffectType.POISON, PotionEffect.INFINITE_DURATION, 0, false, true
+                )
+            )
+        }
+    }
+
+    @EventHandler
+    fun onRespawn(event: PlayerRespawnEvent) {
+        if (!serverItems.isEmpty()) {
+            event.player.addPotionEffect(
                 PotionEffect(
                     PotionEffectType.POISON, PotionEffect.INFINITE_DURATION, 0, false, true
                 )
