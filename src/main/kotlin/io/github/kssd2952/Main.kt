@@ -1,6 +1,7 @@
 package io.github.kssd2952
 
 import com.destroystokyo.paper.event.entity.EntityRemoveFromWorldEvent
+import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.entity.Item
 import org.bukkit.entity.Player
@@ -32,13 +33,31 @@ class Main : JavaPlugin(), Listener {
         val location = event.block.location
         event.isCancelled = true
 
-        for (item in items) {
-            repeat(itemCount) {
-                world.dropItem(location, item.itemStack.clone())
-            }
-        }
+        if (itemCount < 1) {
+            itemCount = 1
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "clear @a")
 
-        itemCount *= 2
+            for (world in Bukkit.getWorlds()) {
+                for (entity in world.entities) {
+                    if (entity is Player) {
+                        for (effect in entity.activePotionEffects) {
+                            entity.removePotionEffect(effect.type)
+                        }
+                        entity.kick(Component.text("당신은 지구를 소중히 생각하지 않았지"))
+                    } else {
+                        entity.remove()
+                    }
+                }
+            }
+        } else {
+            for (item in items) {
+                repeat(itemCount) {
+                    world.dropItem(location, item.itemStack.clone())
+                }
+            }
+
+            itemCount *= 2
+        }
     }
 
     @EventHandler
