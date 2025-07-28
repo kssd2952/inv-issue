@@ -22,6 +22,7 @@ class Main : JavaPlugin(), Listener {
 
     override fun onEnable() {
         logger.info("inv-issue plugin v" + pluginMeta.version)
+        Bukkit.getServer().pluginManager.registerEvents(this, this)
     }
 
     @EventHandler
@@ -43,6 +44,7 @@ class Main : JavaPlugin(), Listener {
     @EventHandler
     fun onItemSpawn(event: ItemSpawnEvent) {
         val item = event.entity
+        item.isGlowing = true
         serverItems.add(item)
 
         for (player in Bukkit.getOnlinePlayers()) {
@@ -59,8 +61,8 @@ class Main : JavaPlugin(), Listener {
         if (event.entity is Item) {
             serverItems.remove(event.entity)
 
-            logger.info((event.entity as Item).itemStack.amount.toString())
-            logger.info(itemCount.toString())
+//            logger.info((event.entity as Item).itemStack.amount.toString())
+//            logger.info(itemCount.toString())
 
             if (serverItems.isEmpty()) {
                 for (player in Bukkit.getOnlinePlayers()) {
