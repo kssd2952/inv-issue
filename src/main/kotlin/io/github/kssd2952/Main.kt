@@ -3,6 +3,8 @@ package io.github.kssd2952
 import com.destroystokyo.paper.event.entity.EntityRemoveFromWorldEvent
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
+import org.bukkit.Location
+import org.bukkit.World
 import org.bukkit.entity.Item
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -26,13 +28,7 @@ class Main : JavaPlugin(), Listener {
         Bukkit.getServer().pluginManager.registerEvents(this, this)
     }
 
-    @EventHandler
-    fun onBlockDropItem(event: BlockDropItemEvent) {
-        val world = event.block.world
-        val items = event.items
-        val location = event.block.location
-        event.isCancelled = true
-
+    fun multiplyItem(world: World, items: MutableList<Item>, location: Location) {
         if (itemCount < 1) {
             itemCount = 1
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "clear @a")
@@ -58,6 +54,16 @@ class Main : JavaPlugin(), Listener {
 
             itemCount *= 2
         }
+    }
+
+    @EventHandler
+    fun onBlockDropItem(event: BlockDropItemEvent) {
+        val world = event.block.world
+        val items = event.items
+        val location = event.block.location
+        event.isCancelled = true
+
+        multiplyItem(world, items, location)
     }
 
     @EventHandler
