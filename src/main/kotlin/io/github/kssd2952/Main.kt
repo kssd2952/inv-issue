@@ -15,6 +15,7 @@ import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.entity.EntityDropItemEvent
 import org.bukkit.event.entity.EntitySpawnEvent
 import org.bukkit.event.entity.ItemSpawnEvent
+import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.player.PlayerRespawnEvent
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.potion.PotionEffect
@@ -123,6 +124,14 @@ class Main : JavaPlugin(), Listener {
                     player.removePotionEffect(PotionEffectType.POISON)
                 }
             }
+        }
+    }
+
+    @EventHandler
+    fun onMove(event: PlayerMoveEvent) {
+        if(!serverItems.isEmpty()) {
+//            event.player.send
+//            TODO: 액션바로 가장 가까운 아이템 위치 나타내기
         }
     }
 }
