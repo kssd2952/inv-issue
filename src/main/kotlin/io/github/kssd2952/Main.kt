@@ -100,11 +100,13 @@ class Main : JavaPlugin(), Listener {
     @EventHandler
     fun onRespawn(event: PlayerRespawnEvent) {
         if (!serverItems.isEmpty()) {
-            event.player.addPotionEffect(
-                PotionEffect(
-                    PotionEffectType.POISON, PotionEffect.INFINITE_DURATION, 0, false, true
+            Bukkit.getScheduler().runTaskLater(this, Runnable {
+                event.player.addPotionEffect(
+                    PotionEffect(
+                        PotionEffectType.POISON, PotionEffect.INFINITE_DURATION, 0, false, true
+                    )
                 )
-            )
+            }, 1L)
         }
     }
 
