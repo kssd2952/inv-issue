@@ -1,0 +1,4 @@
+name: inv-issue
+main: io.github.kssd2952.Main
+version: 0.1.0
+api-version: 1.21
