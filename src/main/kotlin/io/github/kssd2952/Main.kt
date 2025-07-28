@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockDropItemEvent
 import org.bukkit.event.entity.EntityChangeBlockEvent
+import org.bukkit.event.entity.EntityDropItemEvent
 import org.bukkit.event.entity.EntitySpawnEvent
 import org.bukkit.event.entity.ItemSpawnEvent
 import org.bukkit.plugin.java.JavaPlugin
@@ -64,6 +65,16 @@ class Main : JavaPlugin(), Listener {
         event.isCancelled = true
 
         multiplyItem(world, items, location)
+    }
+
+    @EventHandler
+    fun onEntityItemDrop(event: EntityDropItemEvent) {
+        val world = event.entity.world
+        val item = event.itemDrop
+        val location = event.entity.location
+        event.isCancelled = true
+
+        multiplyItem(world, mutableListOf(item), location)
     }
 
     @EventHandler
